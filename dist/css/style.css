@@ -1,6 +1,7 @@
 /**
 * Start promocard
 */
+
 .start-promocards {
   box-sizing: border-box;
 }
@@ -50,24 +51,6 @@
   width: 60%;
 }
 
-@media screen and (max-width: 800px) {
-  .start-promocards [data-card-column="2/1-3"]:nth-of-type(1) {
-    width: 50%;
-  }
-  .start-promocards [data-card-column="2/1-3"]:nth-of-type(2) {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .start-promocards [data-card-column="2/1-3"]:nth-of-type(1) {
-    width: 100%;
-  }
-  .start-promocards [data-card-column="2/1-3"]:nth-of-type(2) {
-    width: 100%;
-  }
-}
-
 .start-promocards [data-card-column="1-3/2"]:nth-of-type(1) {
   width: 60%;
 }
@@ -76,77 +59,20 @@
   width: 40%;
 }
 
-@media screen and (max-width: 800px) {
-  .start-promocards [data-card-column="1-3/2"]:nth-of-type(1) {
-    width: 50%;
-  }
-  .start-promocards [data-card-column="1-3/2"]:nth-of-type(2) {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .start-promocards [data-card-column="1-3/2"]:nth-of-type(1) {
-    width: 100%;
-  }
-  .start-promocards [data-card-column="1-3/2"]:nth-of-type(2) {
-    width: 100%;
-  }
-}
-
 .start-promocards [data-card-column="5"] {
   width: 20%;
-}
-
-@media screen and (max-width: 1200px) {
-  .start-promocards [data-card-column="5"] {
-    width: 50%;
-  }
-  .start-promocards [data-card-column="5"]:nth-of-type(5) {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .start-promocards [data-card-column="5"] {
-    width: 100%;
-  }
 }
 
 .start-promocards [data-card-column="4"] {
   width: 25%;
 }
 
-@media screen and (max-width: 1200px) {
-  .start-promocards [data-card-column="4"] {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .start-promocards [data-card-column="4"] {
-    width: 100%;
-  }
-}
-
 .start-promocards [data-card-column="3"] {
   width: 33.3333333333%;
 }
 
-@media screen and (max-width: 780px) {
-  .start-promocards [data-card-column="3"] {
-    width: 100%;
-  }
-}
-
 .start-promocards [data-card-column="2"] {
   width: 50%;
-}
-
-@media screen and (max-width: 500px) {
-  .start-promocards [data-card-column="2"] {
-    width: 100%;
-  }
 }
 
 .start-promocards [data-card-column="1"] {
@@ -479,4 +405,72 @@
   text-align: center;
 }
 
-/*# sourceMappingURL=style.css.map */
+@media screen and (max-width: 1200px) {
+  .start-promocards [data-card-column="5"] {
+    width: 50%;
+  }
+
+  .start-promocards [data-card-column="5"]:nth-of-type(5) {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="4"] {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .start-promocards [data-card-column="2/1-3"]:nth-of-type(1) {
+    width: 50%;
+  }
+
+  .start-promocards [data-card-column="2/1-3"]:nth-of-type(2) {
+    width: 50%;
+  }
+
+  .start-promocards [data-card-column="1-3/2"]:nth-of-type(1) {
+    width: 50%;
+  }
+
+  .start-promocards [data-card-column="1-3/2"]:nth-of-type(2) {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .start-promocards [data-card-column="3"] {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .start-promocards [data-card-column="2/1-3"]:nth-of-type(1) {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="2/1-3"]:nth-of-type(2) {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="1-3/2"]:nth-of-type(1) {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="1-3/2"]:nth-of-type(2) {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .start-promocards [data-card-column="5"] {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="4"] {
+    width: 100%;
+  }
+
+  .start-promocards [data-card-column="2"] {
+    width: 100%;
+  }
+}

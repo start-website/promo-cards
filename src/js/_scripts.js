@@ -86,38 +86,48 @@ $(document).ready(function () {
                     }
 
                     if (this.cardsSettings[cardsCount].timer) {
-                        var tagPromocardsCardTimer = document.createElement('div');
-                        tagPromocardsCardTimer.className = 'start-promocards__timer';
-                        tagPromocardsCardTimer.innerHTML = 
-                                '<span class="start-promocards__timer_days">' + '00' + ' : ' +'</span>' + 
-                                '<span class="start-promocards__timer_hours">' + '00' + ' : ' + '</span>' + 
-                                '<span class="start-promocards__timer_minutes">' + '00' + ' : ' + '</span>' + 
+                        function setTimer() {
+                            var tagPromocardsCardTimer = document.createElement('div');
+                            tagPromocardsCardTimer.className = 'start-promocards__timer';
+                            tagPromocardsCardTimer.innerHTML =
+                                '<span class="start-promocards__timer_days">' + '00' + '</span>' +
+                                '<span class="start-promocards__timer_hours">' + '00' + '</span>' +
+                                '<span class="start-promocards__timer_minutes">' + '00' + '</span>' +
                                 '<span class="start-promocards__timer_seconds">' + '00';
-                        tagPromocardsInfo.appendChild(tagPromocardsCardTimer);
+                            tagPromocardsInfo.appendChild(tagPromocardsCardTimer);
 
-                        var countDowndate = new Date(this.cardsSettings[cardsCount].timer).getTime();
-                        var countDownFunction = setInterval(function () {
-                            var now = new Date().getTime();
-                            var distance = countDowndate - now;
-                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                            tagPromocardsCardTimer.innerHTML = 
-                                '<span class="start-promocards__timer_days">' + days + ' : ' +'</span>' + 
-                                '<span class="start-promocards__timer_hours">' + hours + ' : ' + '</span>' + 
-                                '<span class="start-promocards__timer_minutes">' + minutes + ' : ' + '</span>' + 
-                                '<span class="start-promocards__timer_seconds">' + seconds;
+                            var countDowndate = new Date(this.cardsSettings[cardsCount].timer).getTime();
+                            var countDownFunction = setInterval(function () {
+                                var now = new Date().getTime();
+                                var distance = countDowndate - now;
+                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                            if (distance < 0) {
-                                clearInterval(countDownFunction);
-                                tagPromocardsCardTimer.innerHTML = 
-                                '<span class="start-promocards__timer_days">' + '00' + ' : ' +'</span>' + 
-                                '<span class="start-promocards__timer_hours">' + '00' + ' : ' + '</span>' + 
-                                '<span class="start-promocards__timer_minutes">' + '00' + ' : ' + '</span>' + 
-                                '<span class="start-promocards__timer_seconds">' + '00';
-                            }
-                        }, 1000);
+                                var htmlDays = '<span class="start-promocards__timer_days">' + days + '</span>';
+                                var htmlHours = '<span class="start-promocards__timer_hours">' + hours + '</span>';
+                                var htmlMinutes = '<span class="start-promocards__timer_minutes">' + minutes + '</span>';
+                                var htmlSeconds = '<span class="start-promocards__timer_seconds">' + seconds;
+
+                                if (days < 10) htmlDays = '<span class="start-promocards__timer_days">' + '0' + days + '</span>';
+                                if (hours < 10) htmlHours = '<span class="start-promocards__timer_hours">' + '0' + hours + '</span>';
+                                if (minutes < 10) htmlMinutes = '<span class="start-promocards__timer_minutes">' + '0' + minutes + '</span>';
+                                if (seconds < 10) htmlSeconds = '<span class="start-promocards__timer_seconds">' + '0' + seconds;
+
+                                tagPromocardsCardTimer.innerHTML = htmlDays + htmlHours + htmlMinutes + htmlSeconds;
+
+                                if (distance < 0) {
+                                    clearInterval(countDownFunction);
+                                    tagPromocardsCardTimer.innerHTML =
+                                        '<span class="start-promocards__timer_days">' + '00' + '</span>' +
+                                        '<span class="start-promocards__timer_hours">' + '00' + '</span>' +
+                                        '<span class="start-promocards__timer_minutes">' + '00' + '</span>' +
+                                        '<span class="start-promocards__timer_seconds">' + '00';
+                                }
+                            }, 1000);
+                        }
+                        setTimer.call(this);
                     }
 
                     if (this.cardsSettings[cardsCount].buttonText) {
@@ -183,7 +193,6 @@ $(document).ready(function () {
                 buttonText: 'Buy',
                 backgroundImageJpg: 'images/car-dashboard-2667434_640.jpg',
                 backgroundImageWebp: '',
-                column: 2,
             },
             {
                 title: 'Title card',
@@ -191,7 +200,6 @@ $(document).ready(function () {
                 buttonText: 'Buy',
                 backgroundImageJpg: 'images/ferrari-360-2918130_640.jpg',
                 backgroundImageWebp: '',
-                column: 3,
             },
             {
                 title: 'Title card',
@@ -199,7 +207,6 @@ $(document).ready(function () {
                 buttonText: '',
                 backgroundImageJpg: 'images/speed-1249610_640.jpg',
                 backgroundImageWebp: '',
-                column: 3,
             },
         ]
     });
@@ -225,7 +232,7 @@ $(document).ready(function () {
                 backgroundImageJpg: 'images/buildings-1851246_640.jpg',
                 backgroundImageWebp: '',
                 column: 3,
-                timer: 'Oct 20, 2020 00:00:00'
+                timer: '2021-11-05 15:00'
             },
         ]
     });
@@ -242,8 +249,7 @@ $(document).ready(function () {
                 buttonText: 'Buy',
                 backgroundImageJpg: 'images/action-1839225_640.jpg',
                 backgroundImageWebp: '',
-                column: 2,
-                timer: 'Oct 26, 2020 00:00:00',
+                timer: '2021-12-04 23:55',
             },
             {
                 title: 'Title card',
@@ -251,8 +257,7 @@ $(document).ready(function () {
                 buttonText: 'Buy',
                 backgroundImageJpg: 'images/wheel-5583386_640.jpg',
                 backgroundImageWebp: '',
-                column: 3,
-                timer: 'Oct 25, 2020 00:00:00',
+                timer: '2021-12-04 23:55',
             },
             {
                 title: 'Title card',
@@ -260,7 +265,7 @@ $(document).ready(function () {
                 buttonText: 'Buy',
                 backgroundImageJpg: 'images/adventure-3113376_640.jpg',
                 backgroundImageWebp: '',
-                column: 3,
+                timer: '2020-12-04 23:55',
             },
             {
                 title: 'Title card',

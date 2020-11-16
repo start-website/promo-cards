@@ -1,76 +1,232 @@
-function checkboxChange() {
-    const inputsCheckbox = document.querySelectorAll('input[type="checkbox"]');
-    let inputName;
-    for (let i = 0; i < inputsCheckbox.length; i++) {
-        inputsCheckbox[i].addEventListener('change', function () {
-            inputsCheckbox[i].parentElement.parentElement.childNodes.forEach(function (elem) {
-                if (elem.tagName === 'LABEL') {
-                    if (elem.firstChild.hasAttribute('checked')) {
-                        inputName = elem.firstChild.getAttribute('name');
-                    }
-                    elem.firstChild.checked = false;
-                    elem.firstChild.removeAttribute('checked');
-                    elem.firstChild.setAttribute('name', 'option');
-                }
+var app = new Vue({
+    delimiters: ['%%', '%%'],
+    el: '.start',
+    data: {
+        groupCount: +document.querySelector('#group-count').value,
+        pluginUrl: document.querySelector('#plugin_url').value,
+        groupSettings: [],
+        cardCount: 5,
+    },
+    methods: {
+        selectView(e, indexGroup) {
+            let menuLi = e.target.parentElement;
+            if (e.target.tagName === 'LI') menuLi = e.target;
+
+            const menuLiSublings = menuLi.parentElement.children;
+
+            for (let i = 0; i < menuLiSublings.length; i++) {
+                menuLiSublings[i].className = '';
+            }
+            this.groupSettings[indexGroup].view = menuLi.dataset.value;
+            menuLi.className = 'menu-selection-active';
+        },
+        selectSize(e, indexGroup) {
+            let menuLi = e.target.parentElement;
+            if (e.target.tagName === 'LI') menuLi = e.target;
+
+            const menuLiSublings = menuLi.parentElement.children;
+
+            for (let i = 0; i < menuLiSublings.length; i++) {
+                menuLiSublings[i].className = '';
+            }
+            this.groupSettings[indexGroup].size = menuLi.dataset.value;
+            menuLi.className = 'menu-selection-active';
+        },
+        selectFormat(e, indexGroup) {
+            let menuLi = e.target.parentElement;
+            if (e.target.tagName === 'LI') menuLi = e.target;
+
+            this.groupSettings[indexGroup].format = menuLi.dataset.value;
+
+            switch (menuLi.dataset.value) {
+                case '1':
+                    this.groupSettings[indexGroup].cardsShow = 1;
+                    break;
+                case '2':
+                    this.groupSettings[indexGroup].cardsShow = 2;
+                    break;
+                case '3':
+                    this.groupSettings[indexGroup].cardsShow = 3;
+                    break;
+                case '4':
+                    this.groupSettings[indexGroup].cardsShow = 4;
+                    break;
+                case '5':
+                    this.groupSettings[indexGroup].cardsShow = 5;
+                    break;
+                case '1-3/2':
+                    this.groupSettings[indexGroup].cardsShow = 2;
+                    break;
+                case '2/1-3':
+                    this.groupSettings[indexGroup].cardsShow = 2;
+                    break;
+            }
+        },
+        selectTab(e, indexGroup, cardNumber) {
+            let tabButton = e.target.parentElement;
+            if (e.target.tagName === 'LI') tabButton = e.target;
+
+            this.groupSettings[indexGroup].tabActive = cardNumber;
+        },
+        addGroup() {
+            this.groupCount++;
+            this.groupSettings.push({
+                view: 1,
+                size: 'xs',
+                format: '5',
+                column: 5,
+                tabActive: 1,
+                cardsShow: 5,
+                cardsInfo: []
             })
-            this.setAttribute('checked', '');
-            this.checked = true;
-            this.setAttribute('name', inputName);
-        })
-    }
-}
 
-function checkInputs() {
-    const inputArray = document.querySelectorAll('input');
-    const inputSumbit = document.querySelector('input[type="submit"]');
-    const inputPrivacyLink = document.querySelector('input[name="shop_start_table_size[privacy_link]"]');
-    let messageError;
-    let elemFieldDesc;
+            for (let i = 0; i < this.cardCount; i++) {
+                this.groupSettings[this.groupSettings.length - 1].cardsInfo.push({
+                    title: '',
+                    description: '',
+                    buttonText: '',
+                    backgroundImageJpg: '',
+                    backgroundImageWebp: '',
+                    timerDate: '',
+                    timerTime: '',
+                })
+            }
+        },
+        delGroup() {
+            if (this.groupCount > 1) {
+                this.groupCount--;
+                this.groupSettings.pop();
+            }
+        },
+        checkImage(e, type) {
+            const input = e.target;
+            const inputBlockChilds = input.parentElement.parentElement.children;
+            let hintError;
+            let regex;
 
-    for (let i = 0; i < inputArray.length; i++) {
-        switch (inputArray[i].name) {
-            case 'shop_start_table_size[text_color]':
-                inputArray[i].addEventListener('change', function () {
-                    inputArray[i].parentElement.parentElement.childNodes.forEach(function (elem) {
-                        if (/hint-error/gi.test(elem.className)) messageError = elem;
-                    })
-                    if (!/^#([\da-f]{3}){1,2}$/i.test(inputArray[i].value) && inputArray[i].value !== '') {
-                        messageError.style.display = 'block';
-                        inputSumbit.disabled = true;
-                    } else {
-                        messageError.style.display = '';
-                        inputSumbit.disabled = false;
+            switch (type) {
+                case 'jpg':
+                    regex = /(png|jpe?g|gif|svg)$/i;
+                    break;
+                case 'webp':
+                    regex = /webp$/i;
+                    break;
+            }
+
+            for (let i = 0; i < inputBlockChilds.length; i++) {
+                const elem = inputBlockChilds[i];
+
+                if (elem.className && elem.className.match(/hint-error/gi)) {
+                    hintError = elem;
+                }
+            }
+
+            if (!regex.test(input.value)) {
+                hintError.style.display = 'block';
+            } else {
+                hintError.style.display = '';
+            }
+        },
+        reestablishNameFileWebp(e, numberGroup, cardNumber) {
+            e.target.name = `shop_start_promocards[group_${numberGroup}_card_background_image_webp_${cardNumber}]`;
+
+            const inputTextWebp = document.querySelector(`#group_${numberGroup}_input_text_webp_${cardNumber}`);
+            inputTextWebp.name = '';
+            inputTextWebp.value = '';
+        },
+        reestablishNameFileJpg(e, numberGroup, cardNumber) {
+            e.target.name = `shop_start_promocards[group_${numberGroup}_card_background_image_jpg_${cardNumber}]`;
+
+            const inputTextJpg = document.querySelector(`#group_${numberGroup}_input_text_jpg_${cardNumber}`);
+            inputTextJpg.name = '';
+            inputTextJpg.value = '';
+        },
+        delImageJpg(e, indexGroup, cardNumber) {
+            const inputFileJpg = document.querySelector(`#group_${indexGroup + 1}_input_file_jpg_${cardNumber}`);
+            const inputTextJpg = document.querySelector(`#group_${indexGroup + 1}_input_text_jpg_${cardNumber}`);
+
+            const inputFileJpgNameDefault = inputFileJpg.name;
+            const inputTextJpgNameDefault = inputTextJpg.name;
+
+            this.groupSettings[indexGroup].cardsInfo[cardNumber - 1].backgroundImageJpg = false;
+            inputTextJpg.name = inputFileJpgNameDefault;
+            inputFileJpg.name = inputTextJpgNameDefault;
+            inputTextJpg.value = '';
+        },
+        delImageWebp(e, indexGroup, cardNumber) {
+            const inputFileWebp = document.querySelector(`#group_${indexGroup + 1}_input_file_webp_${cardNumber}`);
+            const inputTextWebp = document.querySelector(`#group_${indexGroup + 1}_input_text_webp_${cardNumber}`);
+
+            const inputFileWebpNameDefault = inputFileWebp.name;
+            const inputTextWebpNameDefault = inputTextWebp.name;
+
+            this.groupSettings[indexGroup].cardsInfo[cardNumber - 1].backgroundImageWebp = false;
+            inputTextWebp.name = inputFileWebpNameDefault;
+            inputFileWebp.name = inputTextWebpNameDefault;
+            inputTextWebp.value = '';
+
+        },
+        delDate(e, indexGroup, cardNumber) {
+            this.groupSettings[indexGroup].cardsInfo[cardNumber - 1].timerDate = '';
+            this.groupSettings[indexGroup].cardsInfo[cardNumber - 1].timerTime = '';
+        },
+        pageReload() {
+            location.href = location.href;
+        }
+    },
+    created: function () {
+        let groupNumber = 0;
+        for (let i = 0; i < this.groupCount; i++) {
+            groupNumber++;
+
+            const cardsFormat = document.querySelector(`#format_group_${groupNumber}`).value;
+            let cardsShow = 1;
+
+            switch (cardsFormat) {
+                case '2':
+                    cardsShow = 2;
+                    break;
+                case '3':
+                    cardsShow = 3;
+                    break;
+                case '4':
+                    cardsShow = 4;
+                    break;
+                case '5':
+                    cardsShow = 5;
+                    break;
+                case '1-3/2':
+                    cardsShow = 2;
+                    break;
+                case '2/1-3':
+                    cardsShow = 2;
+                    break;
+            }
+
+            this.groupSettings.push({
+                view: +document.querySelector(`#views_group_${groupNumber}`).value,
+                size: document.querySelector(`#size_group_${groupNumber}`).value,
+                format: cardsFormat,
+                tabActive: 1,
+                cardsShow: cardsShow,
+                cardsInfo: []
+            })
+
+            let cardNumber = 0;
+            for (let j = 0; j < this.cardCount; j++) {
+                cardNumber++;
+                this.groupSettings[i].cardsInfo.push(
+                    {
+                        title: document.querySelector(`#group_${groupNumber}_card_title_${cardNumber}`).value,
+                        description: document.querySelector(`#group_${groupNumber}_card_description_${cardNumber}`).value,
+                        buttonText: document.querySelector(`#group_${groupNumber}_card_button_text_${cardNumber}`).value,
+                        backgroundImageJpg: document.querySelector(`#group_${groupNumber}_card_background_image_jpg_${cardNumber}`).value,
+                        backgroundImageWebp: document.querySelector(`#group_${groupNumber}_card_background_image_webp_${cardNumber}`).value,
+                        timerDate: document.querySelector(`#group_${groupNumber}_card_timer_date_${cardNumber}`).value,
+                        timerTime: document.querySelector(`#group_${groupNumber}_card_timer_time_${cardNumber}`).value,
                     }
-                })
-                break;
-            case 'shop_start_table_size[set_product_page]':
-                inputArray[i].addEventListener('change', function () {
-                    inputArray[i].parentElement.parentElement.childNodes.forEach(function (elem) {
-                        if (/field-description/gi.test(elem.className)) elemFieldDesc = elem;
-                    })
-                    if (inputArray[i].value == 'false') {
-                        elemFieldDesc.style.display = 'block';
-                    } else {
-                        elemFieldDesc.style.display = '';
-                    }
-                })
-                break;
-            case 'shop_start_table_size[table_form]':
-                inputArray[i].addEventListener('change', function () {
-                    inputArray[i].parentElement.parentElement.childNodes.forEach(function (elem) {
-                        if (/field-description/gi.test(elem.className)) elemFieldDesc = elem;
-                    })
-                    if (inputArray[i].value == 'true') {
-                        elemFieldDesc.style.display = 'block';
-                    } else {
-                        elemFieldDesc.style.display = '';
-                        inputPrivacyLink.value = '';
-                    }
-                })
-                break;
+                )
+            }
         }
     }
-}
-
-checkboxChange();
-checkInputs();
+})
