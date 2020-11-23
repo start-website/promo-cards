@@ -44,6 +44,13 @@ gulp.task('move-dist-images', function (done) {
     .pipe(gulp.dest('./dist/images'));
 })
 
+gulp.task('move-dist-js', function (done) {
+  return gulp.src([
+    './src/js/jquery-1.11.1.min.js',
+  ])
+    .pipe(gulp.dest('./dist/js'));
+})
+
 gulp.task('sass', function () {
   return gulp.src([
     './src/scss/style.scss',
@@ -188,6 +195,6 @@ gulp.task('watch', function() {
 
 gulp.task('default', gulp.parallel('watch', 'move-dist', 'webpack', 'webp', 'sass', 'browser-sync'));
 
-gulp.task('build', gulp.series('postcss', 'clean', 'sass' ,'postcss', 'move-dist', 'move-dist-fonts', 'move-dist-images', 'tiny', 'webpack', 'webp'));
+gulp.task('build', gulp.series('postcss', 'clean', 'sass' ,'postcss', 'move-dist', 'move-dist-fonts', 'move-dist-images', 'move-dist-js', 'tiny', 'webpack', 'webp'));
 
 
