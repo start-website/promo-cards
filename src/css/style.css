@@ -170,6 +170,7 @@
 .start-promocards__info {
   position: absolute;
   padding: 15px 15px 19px 15px;
+  color: #fff;
 }
 
 .start-promocards__info_title {
@@ -204,6 +205,11 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 12px;
+}
+
+.start-promocards__info_button:hover {
+  color: inherit;
+  text-decoration: none;
 }
 
 .start-promocards__info_button-text {

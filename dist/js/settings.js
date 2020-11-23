@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 74);
+/******/ 	return __webpack_require__(__webpack_require__.s = 77);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -108,10 +108,12 @@ module.exports =
 /* 1 */
 /***/ (function(module, exports) {
 
-var hasOwnProperty = {}.hasOwnProperty;
-
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
 };
 
 
@@ -119,12 +121,10 @@ module.exports = function (it, key) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (error) {
-    return true;
-  }
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
 };
 
 
@@ -141,7 +141,7 @@ module.exports = function (it) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 // Thank's IE8 for his funny defineProperty
 module.exports = !fails(function () {
@@ -210,7 +210,7 @@ module.exports = function (it) {
 
 // toObject with fallback for non-array-like ES3 strings
 var IndexedObject = __webpack_require__(33);
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 
 module.exports = function (it) {
   return IndexedObject(requireObjectCoercible(it));
@@ -219,11 +219,23 @@ module.exports = function (it) {
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
 var shared = __webpack_require__(20);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var uid = __webpack_require__(21);
 var NATIVE_SYMBOL = __webpack_require__(24);
 var USE_SYMBOL_AS_UID = __webpack_require__(41);
@@ -237,18 +249,6 @@ module.exports = function (name) {
     if (NATIVE_SYMBOL && has(Symbol, name)) WellKnownSymbolsStore[name] = Symbol[name];
     else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-// `RequireObjectCoercible` abstract operation
-// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on " + it);
-  return it;
 };
 
 
@@ -395,7 +395,7 @@ var propertyIsEnumerableModule = __webpack_require__(32);
 var createPropertyDescriptor = __webpack_require__(12);
 var toIndexedObject = __webpack_require__(8);
 var toPrimitive = __webpack_require__(13);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var IE8_DOM_DEFINE = __webpack_require__(25);
 
 var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -429,7 +429,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(0);
 var createNonEnumerableProperty = __webpack_require__(6);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var setGlobal = __webpack_require__(14);
 var inspectSource = __webpack_require__(26);
 var InternalStateModule = __webpack_require__(35);
@@ -524,7 +524,7 @@ module.exports = function (argument) {
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
   // Chrome 38 Symbol has incorrect toString conversion
@@ -538,7 +538,7 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(4);
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 var createElement = __webpack_require__(34);
 
 // Thank's IE8 for his funny defineProperty
@@ -663,7 +663,7 @@ exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 var classof = __webpack_require__(18);
 
 var split = ''.split;
@@ -702,7 +702,7 @@ var NATIVE_WEAK_MAP = __webpack_require__(44);
 var global = __webpack_require__(0);
 var isObject = __webpack_require__(3);
 var createNonEnumerableProperty = __webpack_require__(6);
-var objectHas = __webpack_require__(1);
+var objectHas = __webpack_require__(2);
 var sharedKey = __webpack_require__(28);
 var hiddenKeys = __webpack_require__(15);
 
@@ -772,7 +772,7 @@ module.exports = false;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var ownKeys = __webpack_require__(45);
 var getOwnPropertyDescriptorModule = __webpack_require__(17);
 var definePropertyModule = __webpack_require__(5);
@@ -801,7 +801,7 @@ module.exports = global;
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var toIndexedObject = __webpack_require__(8);
 var indexOf = __webpack_require__(46).indexOf;
 var hiddenKeys = __webpack_require__(15);
@@ -844,7 +844,7 @@ module.exports = NATIVE_SYMBOL
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 
 // `ToObject` abstract operation
 // https://tc39.github.io/ecma262/#sec-toobject
@@ -968,7 +968,7 @@ module.exports = function (index, length) {
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 var replacement = /#|\.prototype\./;
 
@@ -997,7 +997,7 @@ module.exports = isForced;
 
 var isObject = __webpack_require__(3);
 var isArray = __webpack_require__(31);
-var wellKnownSymbol = __webpack_require__(9);
+var wellKnownSymbol = __webpack_require__(10);
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -1032,8 +1032,8 @@ module.exports = getBuiltIn('navigator', 'userAgent') || '';
 
 "use strict";
 
-var regexpFlags = __webpack_require__(79);
-var stickyHelpers = __webpack_require__(80);
+var regexpFlags = __webpack_require__(82);
+var stickyHelpers = __webpack_require__(83);
 
 var nativeExec = RegExp.prototype.exec;
 // This always refers to the native implementation, because the
@@ -1181,18 +1181,21 @@ $({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
 /* 71 */,
 /* 72 */,
 /* 73 */,
-/* 74 */
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75);
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78);
 /* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(78);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81);
 /* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
 /* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(81);
+/* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(84);
 /* harmony import */ var core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match__WEBPACK_IMPORTED_MODULE_3__);
 
 
@@ -1289,6 +1292,7 @@ var app = new Vue({
           title: '',
           description: '',
           buttonText: '',
+          link: '#',
           backgroundImageJpg: '',
           backgroundImageWebp: '',
           timerDate: '',
@@ -1422,6 +1426,7 @@ var app = new Vue({
           title: document.querySelector("#group_".concat(groupNumber, "_card_title_").concat(cardNumber)).value,
           description: document.querySelector("#group_".concat(groupNumber, "_card_description_").concat(cardNumber)).value,
           buttonText: document.querySelector("#group_".concat(groupNumber, "_card_button_text_").concat(cardNumber)).value,
+          link: document.querySelector("#group_".concat(groupNumber, "_card_link_").concat(cardNumber)).value,
           backgroundImageJpg: document.querySelector("#group_".concat(groupNumber, "_card_background_image_jpg_").concat(cardNumber)).value,
           backgroundImageWebp: document.querySelector("#group_".concat(groupNumber, "_card_background_image_webp_").concat(cardNumber)).value,
           timerDate: document.querySelector("#group_".concat(groupNumber, "_card_timer_date_").concat(cardNumber)).value,
@@ -1433,21 +1438,21 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $ = __webpack_require__(11);
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 var isArray = __webpack_require__(31);
 var isObject = __webpack_require__(3);
 var toObject = __webpack_require__(42);
 var toLength = __webpack_require__(22);
-var createProperty = __webpack_require__(76);
+var createProperty = __webpack_require__(79);
 var arraySpeciesCreate = __webpack_require__(49);
-var arrayMethodHasSpeciesSupport = __webpack_require__(77);
-var wellKnownSymbol = __webpack_require__(9);
+var arrayMethodHasSpeciesSupport = __webpack_require__(80);
+var wellKnownSymbol = __webpack_require__(10);
 var V8_VERSION = __webpack_require__(55);
 
 var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
@@ -1500,7 +1505,7 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
 
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1517,11 +1522,11 @@ module.exports = function (object, key, value) {
 
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
-var wellKnownSymbol = __webpack_require__(9);
+var fails = __webpack_require__(1);
+var wellKnownSymbol = __webpack_require__(10);
 var V8_VERSION = __webpack_require__(55);
 
 var SPECIES = wellKnownSymbol('species');
@@ -1542,7 +1547,7 @@ module.exports = function (METHOD_NAME) {
 
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(4);
@@ -1570,7 +1575,7 @@ if (DESCRIPTORS && !(NAME in FunctionPrototype)) {
 
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1593,13 +1598,13 @@ module.exports = function () {
 
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
 // so we use an intermediate function.
@@ -1623,17 +1628,17 @@ exports.BROKEN_CARET = fails(function () {
 
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var fixRegExpWellKnownSymbolLogic = __webpack_require__(82);
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(85);
 var anObject = __webpack_require__(7);
 var toLength = __webpack_require__(22);
-var requireObjectCoercible = __webpack_require__(10);
-var advanceStringIndex = __webpack_require__(83);
-var regExpExec = __webpack_require__(85);
+var requireObjectCoercible = __webpack_require__(9);
+var advanceStringIndex = __webpack_require__(86);
+var regExpExec = __webpack_require__(88);
 
 // @@match logic
 fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
@@ -1674,7 +1679,7 @@ fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCal
 
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1682,8 +1687,8 @@ fixRegExpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCal
 // TODO: Remove from `core-js@4` since it's moved to entry points
 __webpack_require__(56);
 var redefine = __webpack_require__(19);
-var fails = __webpack_require__(2);
-var wellKnownSymbol = __webpack_require__(9);
+var fails = __webpack_require__(1);
+var wellKnownSymbol = __webpack_require__(10);
 var regexpExec = __webpack_require__(51);
 var createNonEnumerableProperty = __webpack_require__(6);
 
@@ -1806,12 +1811,12 @@ module.exports = function (KEY, length, exec, sham) {
 
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var charAt = __webpack_require__(84).charAt;
+var charAt = __webpack_require__(87).charAt;
 
 // `AdvanceStringIndex` abstract operation
 // https://tc39.github.io/ecma262/#sec-advancestringindex
@@ -1821,11 +1826,11 @@ module.exports = function (S, index, unicode) {
 
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(23);
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 
 // `String.prototype.{ codePointAt, at }` methods implementation
 var createMethod = function (CONVERT_TO_STRING) {
@@ -1854,7 +1859,7 @@ module.exports = {
 
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(18);

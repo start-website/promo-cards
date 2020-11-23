@@ -108,10 +108,12 @@ module.exports =
 /* 1 */
 /***/ (function(module, exports) {
 
-var hasOwnProperty = {}.hasOwnProperty;
-
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
 };
 
 
@@ -119,12 +121,10 @@ module.exports = function (it, key) {
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (error) {
-    return true;
-  }
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
 };
 
 
@@ -141,7 +141,7 @@ module.exports = function (it) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 // Thank's IE8 for his funny defineProperty
 module.exports = !fails(function () {
@@ -210,7 +210,7 @@ module.exports = function (it) {
 
 // toObject with fallback for non-array-like ES3 strings
 var IndexedObject = __webpack_require__(33);
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 
 module.exports = function (it) {
   return IndexedObject(requireObjectCoercible(it));
@@ -219,11 +219,23 @@ module.exports = function (it) {
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
 var shared = __webpack_require__(20);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var uid = __webpack_require__(21);
 var NATIVE_SYMBOL = __webpack_require__(24);
 var USE_SYMBOL_AS_UID = __webpack_require__(41);
@@ -237,18 +249,6 @@ module.exports = function (name) {
     if (NATIVE_SYMBOL && has(Symbol, name)) WellKnownSymbolsStore[name] = Symbol[name];
     else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
   } return WellKnownSymbolsStore[name];
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-// `RequireObjectCoercible` abstract operation
-// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on " + it);
-  return it;
 };
 
 
@@ -395,7 +395,7 @@ var propertyIsEnumerableModule = __webpack_require__(32);
 var createPropertyDescriptor = __webpack_require__(12);
 var toIndexedObject = __webpack_require__(8);
 var toPrimitive = __webpack_require__(13);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var IE8_DOM_DEFINE = __webpack_require__(25);
 
 var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -429,7 +429,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(0);
 var createNonEnumerableProperty = __webpack_require__(6);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var setGlobal = __webpack_require__(14);
 var inspectSource = __webpack_require__(26);
 var InternalStateModule = __webpack_require__(35);
@@ -524,7 +524,7 @@ module.exports = function (argument) {
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
   // Chrome 38 Symbol has incorrect toString conversion
@@ -538,7 +538,7 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(4);
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 var createElement = __webpack_require__(34);
 
 // Thank's IE8 for his funny defineProperty
@@ -663,7 +663,7 @@ exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 var classof = __webpack_require__(18);
 
 var split = ''.split;
@@ -702,7 +702,7 @@ var NATIVE_WEAK_MAP = __webpack_require__(44);
 var global = __webpack_require__(0);
 var isObject = __webpack_require__(3);
 var createNonEnumerableProperty = __webpack_require__(6);
-var objectHas = __webpack_require__(1);
+var objectHas = __webpack_require__(2);
 var sharedKey = __webpack_require__(28);
 var hiddenKeys = __webpack_require__(15);
 
@@ -772,7 +772,7 @@ module.exports = false;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var ownKeys = __webpack_require__(45);
 var getOwnPropertyDescriptorModule = __webpack_require__(17);
 var definePropertyModule = __webpack_require__(5);
@@ -801,7 +801,7 @@ module.exports = global;
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var toIndexedObject = __webpack_require__(8);
 var indexOf = __webpack_require__(46).indexOf;
 var hiddenKeys = __webpack_require__(15);
@@ -844,7 +844,7 @@ module.exports = NATIVE_SYMBOL
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 
 // `ToObject` abstract operation
 // https://tc39.github.io/ecma262/#sec-toobject
@@ -968,7 +968,7 @@ module.exports = function (index, length) {
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__(2);
+var fails = __webpack_require__(1);
 
 var replacement = /#|\.prototype\./;
 
@@ -997,7 +997,7 @@ module.exports = isForced;
 
 var isObject = __webpack_require__(3);
 var isArray = __webpack_require__(31);
-var wellKnownSymbol = __webpack_require__(9);
+var wellKnownSymbol = __webpack_require__(10);
 
 var SPECIES = wellKnownSymbol('species');
 
@@ -1045,7 +1045,7 @@ module.exports = Object.keys || function keys(O) {
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var wellKnownSymbol = __webpack_require__(9);
+var wellKnownSymbol = __webpack_require__(10);
 
 exports.f = wellKnownSymbol;
 
@@ -1075,8 +1075,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(70);
 /* harmony import */ var core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_parse_int__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73);
-/* harmony import */ var core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_link__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73);
+/* harmony import */ var core_js_modules_es_string_link__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_link__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(76);
+/* harmony import */ var core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_timers__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -1145,7 +1148,7 @@ $(document).ready(function () {
           tagPromocardsContent.appendChild(tagPromocardsCardWrap);
           var tagPromocardsCard = document.createElement('a');
           tagPromocardsCard.className = 'start-promocards__card';
-          tagPromocardsCard.setAttribute('href', '#');
+          tagPromocardsCard.setAttribute('href', this.cardsSettings[cardsCount].link);
           tagPromocardsCardWrap.appendChild(tagPromocardsCard);
           var tagPromocardsImage = document.createElement('div');
           tagPromocardsImage.className = 'start-promocards__image';
@@ -1210,8 +1213,9 @@ $(document).ready(function () {
           }
 
           if (this.cardsSettings[cardsCount].buttonText) {
-            var tagPromocardsCardButton = document.createElement('div');
+            var tagPromocardsCardButton = document.createElement('a');
             tagPromocardsCardButton.className = 'start-promocards__info_button';
+            tagPromocardsCardButton.href = this.cardsSettings[cardsCount].link;
             tagPromocardsCardButton.innerHTML = this.cardsSettings[cardsCount].buttonText;
             tagPromocardsInfo.appendChild(tagPromocardsCardButton);
 
@@ -1267,18 +1271,21 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/car-dashboard-2667434_640.jpg',
       backgroundImageWebp: ''
     }, {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/ferrari-360-2918130_640.jpg',
       backgroundImageWebp: ''
     }, {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: '',
+      link: '#mylink',
       backgroundImageJpg: 'images/speed-1249610_640.jpg',
       backgroundImageWebp: ''
     }]
@@ -1293,6 +1300,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/car-5548242_640.jpg',
       backgroundImageWebp: '',
       column: 2
@@ -1300,6 +1308,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/buildings-1851246_640.jpg',
       backgroundImageWebp: '',
       column: 3,
@@ -1316,6 +1325,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/action-1839225_640.jpg',
       backgroundImageWebp: '',
       timer: '2021-12-04 23:55'
@@ -1323,6 +1333,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/wheel-5583386_640.jpg',
       backgroundImageWebp: '',
       timer: '2021-12-04 23:55'
@@ -1330,6 +1341,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/adventure-3113376_640.jpg',
       backgroundImageWebp: '',
       timer: '2020-12-04 23:55'
@@ -1337,6 +1349,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/sport-539472_640.jpg',
       backgroundImageWebp: '',
       column: 3 //timer: 'Oct 25, 2020 00:00:00',
@@ -1345,6 +1358,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/mountain-bike-5567847_640.jpg',
       backgroundImageWebp: '',
       column: 3 //timer: 'Oct 25, 2020 00:00:00',
@@ -1361,6 +1375,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/hiker-1149877_640.jpg',
       backgroundImageWebp: '',
       column: 2
@@ -1368,6 +1383,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/night-839807_640.jpg',
       backgroundImageWebp: '',
       column: 3,
@@ -1384,6 +1400,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/hikers-1147796_640.jpg',
       backgroundImageWebp: '',
       column: 2
@@ -1391,6 +1408,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/tent-548022_640.jpg',
       backgroundImageWebp: '',
       column: 3,
@@ -1407,6 +1425,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/apple-256261_640.jpg',
       backgroundImageWebp: '',
       column: 2
@@ -1414,6 +1433,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      link: '#mylink',
       backgroundImageJpg: 'images/office-583839_640.jpg',
       backgroundImageWebp: '',
       column: 3,
@@ -1435,8 +1455,8 @@ var IS_PURE = __webpack_require__(36);
 var DESCRIPTORS = __webpack_require__(4);
 var NATIVE_SYMBOL = __webpack_require__(24);
 var USE_SYMBOL_AS_UID = __webpack_require__(41);
-var fails = __webpack_require__(2);
-var has = __webpack_require__(1);
+var fails = __webpack_require__(1);
+var has = __webpack_require__(2);
 var isArray = __webpack_require__(31);
 var isObject = __webpack_require__(3);
 var anObject = __webpack_require__(7);
@@ -1458,7 +1478,7 @@ var shared = __webpack_require__(20);
 var sharedKey = __webpack_require__(28);
 var hiddenKeys = __webpack_require__(15);
 var uid = __webpack_require__(21);
-var wellKnownSymbol = __webpack_require__(9);
+var wellKnownSymbol = __webpack_require__(10);
 var wrappedWellKnownSymbolModule = __webpack_require__(53);
 var defineWellKnownSymbol = __webpack_require__(63);
 var setToStringTag = __webpack_require__(64);
@@ -1888,7 +1908,7 @@ module.exports.f = function getOwnPropertyNames(it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var path = __webpack_require__(38);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var wrappedWellKnownSymbolModule = __webpack_require__(53);
 var defineProperty = __webpack_require__(5).f;
 
@@ -1905,8 +1925,8 @@ module.exports = function (NAME) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineProperty = __webpack_require__(5).f;
-var has = __webpack_require__(1);
-var wellKnownSymbol = __webpack_require__(9);
+var has = __webpack_require__(2);
+var wellKnownSymbol = __webpack_require__(10);
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 
@@ -2040,7 +2060,7 @@ module.exports = function (it) {
 var $ = __webpack_require__(11);
 var DESCRIPTORS = __webpack_require__(4);
 var global = __webpack_require__(0);
-var has = __webpack_require__(1);
+var has = __webpack_require__(2);
 var isObject = __webpack_require__(3);
 var defineProperty = __webpack_require__(5).f;
 var copyConstructorProperties = __webpack_require__(37);
@@ -2147,7 +2167,7 @@ module.exports = FORCED ? function parseInt(string, radix) {
 /* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var requireObjectCoercible = __webpack_require__(10);
+var requireObjectCoercible = __webpack_require__(9);
 var whitespaces = __webpack_require__(54);
 
 var whitespace = '[' + whitespaces + ']';
@@ -2179,6 +2199,59 @@ module.exports = {
 
 /***/ }),
 /* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(11);
+var createHTML = __webpack_require__(74);
+var forcedStringHTMLMethod = __webpack_require__(75);
+
+// `String.prototype.link` method
+// https://tc39.github.io/ecma262/#sec-string.prototype.link
+$({ target: 'String', proto: true, forced: forcedStringHTMLMethod('link') }, {
+  link: function link(url) {
+    return createHTML(this, 'a', 'href', url);
+  }
+});
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var requireObjectCoercible = __webpack_require__(9);
+
+var quot = /"/g;
+
+// B.2.3.2.1 CreateHTML(string, tag, attribute, value)
+// https://tc39.github.io/ecma262/#sec-createhtml
+module.exports = function (string, tag, attribute, value) {
+  var S = String(requireObjectCoercible(string));
+  var p1 = '<' + tag;
+  if (attribute !== '') p1 += ' ' + attribute + '="' + String(value).replace(quot, '&quot;') + '"';
+  return p1 + '>' + S + '</' + tag + '>';
+};
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__(1);
+
+// check the existence of a method, lowercase
+// of a tag and escaping quotes in arguments
+module.exports = function (METHOD_NAME) {
+  return fails(function () {
+    var test = ''[METHOD_NAME]('"');
+    return test !== test.toLowerCase() || test.split('"').length > 3;
+  });
+};
+
+
+/***/ }),
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(11);
