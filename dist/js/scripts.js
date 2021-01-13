@@ -1095,8 +1095,10 @@ $(document).ready(function () {
     this.cardsSize = props.cardsSize;
     this.cardsFormat = props.cardsFormat;
     this.names = props.names;
+    this.cardGroupNumber = props.cardGroupNumber;
 
     this.addCards = function (supportWebp) {
+      this.promocards[0].setAttribute('data-group-number', this.cardGroupNumber);
       var tagPromoCardsContainer = document.createElement('div');
       tagPromoCardsContainer.className = 'start-promocards__container';
       this.promocards.prepend(tagPromoCardsContainer);
@@ -1214,7 +1216,7 @@ $(document).ready(function () {
 
           if (this.cardsSettings[cardsCount].buttonText) {
             var tagPromocardsCardButton = document.createElement('a');
-            tagPromocardsCardButton.className = 'start-promocards__info_button';
+            tagPromocardsCardButton.className = this.cardsSettings[cardsCount].buttonClass ? 'start-promocards__button ' + this.cardsSettings[cardsCount].buttonClass : 'start-promocards__button start-promocards__info_button';
             tagPromocardsCardButton.href = this.cardsSettings[cardsCount].link;
             tagPromocardsCardButton.innerHTML = this.cardsSettings[cardsCount].buttonText;
             tagPromocardsInfo.appendChild(tagPromocardsCardButton);
@@ -1267,10 +1269,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 3,
     cardsSize: 'md',
+    cardGroupNumber: '1',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/car-dashboard-2667434_640.jpg',
       backgroundImageWebp: ''
@@ -1278,6 +1282,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/ferrari-360-2918130_640.jpg',
       backgroundImageWebp: ''
@@ -1296,10 +1301,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 3,
     cardsSize: 'md',
+    cardGroupNumber: '1',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/car-5548242_640.jpg',
       backgroundImageWebp: '',
@@ -1308,6 +1315,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/buildings-1851246_640.jpg',
       backgroundImageWebp: '',
@@ -1321,10 +1329,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 2,
     cardsSize: 'md',
+    cardGroupNumber: '2',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/action-1839225_640.jpg',
       backgroundImageWebp: '',
@@ -1333,6 +1343,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/wheel-5583386_640.jpg',
       backgroundImageWebp: '',
@@ -1341,6 +1352,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/adventure-3113376_640.jpg',
       backgroundImageWebp: '',
@@ -1349,6 +1361,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/sport-539472_640.jpg',
       backgroundImageWebp: '',
@@ -1358,6 +1371,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/mountain-bike-5567847_640.jpg',
       backgroundImageWebp: '',
@@ -1371,10 +1385,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 1,
     cardsSize: 'md',
+    cardGroupNumber: '3',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/hiker-1149877_640.jpg',
       backgroundImageWebp: '',
@@ -1383,6 +1399,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/night-839807_640.jpg',
       backgroundImageWebp: '',
@@ -1396,10 +1413,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 1,
     cardsSize: 'md',
+    cardGroupNumber: '3',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/hikers-1147796_640.jpg',
       backgroundImageWebp: '',
@@ -1408,6 +1427,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/tent-548022_640.jpg',
       backgroundImageWebp: '',
@@ -1421,10 +1441,12 @@ $(document).ready(function () {
     // 1, 2, 3, 4, 5, 1-3/2, 2/1-3
     cardsViews: 4,
     cardsSize: 'lg',
+    cardGroupNumber: '4',
     cardsSettings: [{
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/apple-256261_640.jpg',
       backgroundImageWebp: '',
@@ -1433,6 +1455,7 @@ $(document).ready(function () {
       title: 'Title card',
       description: 'Card description here!',
       buttonText: 'Buy',
+      buttonClass: '',
       link: '#mylink',
       backgroundImageJpg: 'images/office-583839_640.jpg',
       backgroundImageWebp: '',

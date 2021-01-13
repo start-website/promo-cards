@@ -212,17 +212,10 @@
   text-decoration: none;
 }
 
-.start-promocards__info_button-text {
-  display: inline-block;
-  margin-top: 8px;
-  line-height: 1;
-  padding: 5px 0;
-  white-space: nowrap;
-  text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-decoration: underline;
-  text-transform: uppercase;
-  font-size: 12px;
+.start-promocards__button {
+  display: block;
+  margin-top: 15px;
+  max-width: 120px;
 }
 
 .start-promocards__timer {
@@ -242,7 +235,7 @@
 }
 
 .start-promocards__timer_days::after {
-  content: ':';
+  content: ":";
   position: absolute;
   top: -1px;
   right: -10px;
@@ -250,7 +243,7 @@
 }
 
 .start-promocards__timer_days::before {
-  content: 'Days';
+  content: "Days";
   position: absolute;
   bottom: -8px;
   left: 0px;
@@ -268,7 +261,7 @@
 }
 
 .start-promocards__timer_hours::after {
-  content: ':';
+  content: ":";
   position: absolute;
   top: -1px;
   right: -10px;
@@ -276,7 +269,7 @@
 }
 
 .start-promocards__timer_hours::before {
-  content: 'Hours';
+  content: "Hours";
   position: absolute;
   bottom: -8px;
   left: 0px;
@@ -294,7 +287,7 @@
 }
 
 .start-promocards__timer_minutes::after {
-  content: ':';
+  content: ":";
   position: absolute;
   top: -1px;
   right: -10px;
@@ -302,7 +295,7 @@
 }
 
 .start-promocards__timer_minutes::before {
-  content: 'Minutes';
+  content: "Minutes";
   position: absolute;
   bottom: -8px;
   left: 0px;
@@ -319,7 +312,7 @@
 }
 
 .start-promocards__timer_seconds::before {
-  content: 'Seconds';
+  content: "Seconds";
   position: absolute;
   bottom: -8px;
   left: 0px;
@@ -354,13 +347,9 @@
   text-align: left;
 }
 
-.start-promocards [data-card-view="1"] .start-promocards__info_button {
+.start-promocards [data-card-view="1"] .start-promocards__button {
   margin-left: 0;
   text-align: center;
-}
-
-.start-promocards [data-card-view="1"] .start-promocards__info_button-text {
-  text-align: left;
 }
 
 .start-promocards [data-card-view="2"] .start-promocards__card {
@@ -395,13 +384,9 @@
   text-align: center;
 }
 
-.start-promocards [data-card-view="2"] .start-promocards__info_button {
+.start-promocards [data-card-view="2"] .start-promocards__button {
   margin-right: auto;
   margin-left: auto;
-}
-
-.start-promocards [data-card-view="2"] .start-promocards__info_button-text {
-  text-align: center;
 }
 
 .start-promocards [data-card-view="3"] .start-promocards__card {
@@ -431,13 +416,9 @@
   text-align: center;
 }
 
-.start-promocards [data-card-view="3"] .start-promocards__info_button {
+.start-promocards [data-card-view="3"] .start-promocards__button {
   margin-right: auto;
   margin-left: auto;
-}
-
-.start-promocards [data-card-view="3"] .start-promocards__info_button-text {
-  text-align: center;
 }
 
 .start-promocards [data-card-view="4"] .start-promocards__info {
@@ -476,13 +457,9 @@
   text-align: center;
 }
 
-.start-promocards [data-card-view="4"] .start-promocards__info_button {
+.start-promocards [data-card-view="4"] .start-promocards__button {
   margin-right: auto;
   margin-left: auto;
-}
-
-.start-promocards [data-card-view="4"] .start-promocards__info_button-text {
-  text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */

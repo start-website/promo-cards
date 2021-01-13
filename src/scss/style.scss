@@ -200,19 +200,12 @@ $containerWidth: 1140px;
                 text-decoration: none;
             }
         }
+    }
 
-        &_button-text {
-            display: inline-block;
-            margin-top: 8px;
-            line-height: 1;
-            padding: 5px 0;
-            white-space: nowrap;
-            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
-            color: #fff;
-            text-decoration: underline;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
+    &__button {
+        display: block;
+        margin-top: 15px;
+        max-width: 120px;
     }
 
     // .start-promocards__timer
@@ -222,7 +215,7 @@ $containerWidth: 1140px;
         font-size: 20px;
         white-space: nowrap;
         line-height: 1.3;
-        
+
         &_days {
             position: relative;
             text-align: center;
@@ -230,14 +223,14 @@ $containerWidth: 1140px;
             margin-right: 15px;
             min-width: 30px;
             &::after {
-                content: ':';
+                content: ":";
                 position: absolute;
                 top: -1px;
                 right: -10px;
                 font-size: 20px;
             }
             &::before {
-                content: 'Days';
+                content: "Days";
                 position: absolute;
                 bottom: -8px;
                 left: 0px;
@@ -254,14 +247,14 @@ $containerWidth: 1140px;
             text-align: center;
             min-width: 30px;
             &::after {
-                content: ':';
+                content: ":";
                 position: absolute;
                 top: -1px;
                 right: -10px;
                 font-size: 20px;
             }
             &::before {
-                content: 'Hours';
+                content: "Hours";
                 position: absolute;
                 bottom: -8px;
                 left: 0px;
@@ -278,14 +271,14 @@ $containerWidth: 1140px;
             text-align: center;
             min-width: 30px;
             &::after {
-                content: ':';
+                content: ":";
                 position: absolute;
                 top: -1px;
                 right: -10px;
                 font-size: 20px;
             }
             &::before {
-                content: 'Minutes';
+                content: "Minutes";
                 position: absolute;
                 bottom: -8px;
                 left: 0px;
@@ -301,7 +294,7 @@ $containerWidth: 1140px;
             text-align: center;
             min-width: 30px;
             &::before {
-                content: 'Seconds';
+                content: "Seconds";
                 position: absolute;
                 bottom: -8px;
                 left: 0px;
@@ -340,15 +333,11 @@ $containerWidth: 1140px;
             &_description {
                 text-align: left;
             }
+        }
 
-            &_button {
-                margin-left: 0;
-                text-align: center;
-            }
-
-            &_button-text {
-                text-align: left;
-            }
+        .start-promocards__button {
+            margin-left: 0;
+            text-align: center;
         }
     }
 
@@ -382,15 +371,11 @@ $containerWidth: 1140px;
             &_description {
                 text-align: center;
             }
+        }
 
-            &_button {
-                margin-right: auto;
-                margin-left: auto;
-            }
-
-            &_button-text {
-                text-align: center;
-            }
+        .start-promocards__button {
+            margin-right: auto;
+            margin-left: auto;
         }
     }
 
@@ -420,15 +405,11 @@ $containerWidth: 1140px;
             &_description {
                 text-align: center;
             }
+        }
 
-            &_button {
-                margin-right: auto;
-                margin-left: auto;
-            }
-
-            &_button-text {
-                text-align: center;
-            }
+        .start-promocards__button {
+            margin-right: auto;
+            margin-left: auto;
         }
     }
 
@@ -464,15 +445,11 @@ $containerWidth: 1140px;
             &_description {
                 text-align: center;
             }
+        }
 
-            &_button {
-                margin-right: auto;
-                margin-left: auto;
-            }
-
-            &_button-text {
-                text-align: center;
-            }
+        .start-promocards__button {
+            margin-right: auto;
+            margin-left: auto;
         }
     }
 }
